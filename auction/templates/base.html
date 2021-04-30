@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/foundation.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/foundation-float.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/foundation-prototype.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/foundation-rtl.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/simplepicker.css' %}"
+    />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <title>{% block title %}Auction House{% endblock %}</title>
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar medium-4 large-4 columns">
+        {% block sidebar %}
+        <h3><a href="/">Auction House</a></h3>
+        <ul class="side-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/items/add">List Item</a></li>
+          <li><a href="/items">Items</a></li>
+          {% if user.is_superuser %}
+            <li><a href="/users">Users</a></li>
+            <li><a href="/logs">Event Logs</a></li>
+          {% endif %}
+          <li>&nbsp;</li>
+
+          {% if user.is_authenticated %}
+            <li><a href="/users?id={{ user.id }}">My profile</a></li>
+            <li><span>Funds: {{ user.fund_diff }} ({{ user.funds }})</span></li>
+          {% endif %}
+          <li>&nbsp;</li>
+
+          {% if user.is_authenticated %}
+            <li><a href="/logout">Logout ({{ user.username }})</a></li>
+          {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          {% endif %}
+        </ul>
+        {% endblock %}
+        
+        <div id="messages">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert-box radius {% if message.tags %}{{message.tags }}{% endif %}" data-alert >
+                {{ message }}
+                <a href="#" class="close">&times;</a>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="content" class="medium-8 large-8 columns">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+  </body>
+</html>

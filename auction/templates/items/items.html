@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Items{% endblock %}
+
+{% block content %}
+<h1>Items</h1>
+<hr/>
+
+{% for i in items %}
+  <h5>{{i.name}} </h5>
+  <p><span class="bold">Current bid:</span> {{i.current_bid}}</p>
+  <p><span class="bold">Minimum bid increment:</span> {{i.min_increment}}</p>
+  <p><span class="bold">Location:</span> {{i.location}}</p>
+  <p><span class="bold">Expires:</span> {{i.expiration_time}}</p>
+  <p><span class="bold">Seller:</span> {{i.owner.username}}</p>
+  <p><span class="bold">Highest bidder:</span> {{i.bidder.username}}</p>
+
+  {% if user.is_authenticated %}
+    {% if user.id != i.owner.id or user.is_superuser == True %}
+        <form action="/items" method="POST">
+            {% csrf_token %}
+            <input type="number" name="bid" value="{{ i.next_min_bid }}" min="{{ i.next_min_bid }}" /> 
+            <input type="hidden" name="id" value="{{ i.id }}" />
+            {% if i.can_bid %}
+              <input type="submit" value="Make bid" class="success button" />
+            {% else %}
+              <input type="submit" value="Insufficient funds" class="success button" disabled />
+            {% endif %}
+          </form>
+    {% endif %}
+    {% if user.id == i.owner.id or user.is_superuser == True %}
+      <form action="/items/delete" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ i.id }}" />
+        <input type="hidden" name="userId" value="{{ user.id }}" /> {# Vulnerability #}
+        {% if user.is_superuser == True %}
+          <input type="submit" value="Delete bid" class="alert button" />
+        {% else %}
+          <input type="submit" value="Cancel bid" class="warning button" />
+        {% endif %}
+      </form>
+    {% endif %}
+  {% else %}
+    <p>Log in to make a bid.</p>
+  {% endif %}
+  <br />
+{% endfor %}
+
+{% endblock %}

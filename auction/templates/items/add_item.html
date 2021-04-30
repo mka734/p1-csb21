@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Items{% endblock %}
+
+{% block content %}
+<h1>List Item</h1>
+
+<form id="add-item-form" action="/items/add" method="POST">
+  {% csrf_token %} {{ form }}
+
+  <div id="datetime-alert" style="display:none;"
+  class="callout alert">Expiration time has to be at least one hour
+  from now.</div>
+
+  <input type="submit" value="List item" class="success button" />
+</form>
+
+<script src="{% static 'js/vendor/simplepicker.js' %}"></script>
+<script src="{% static 'js/listitem.js' %}"></script>
+
+{% endblock %}

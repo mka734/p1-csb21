@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Logs{% endblock %}
+
+{% block content %}
+<h1>Logs</h1>
+
+  {# Vulnerability #}
+  <table>
+    <tr>
+      <th>Path</th>
+      <th>Params</th>
+      <th>IP</th>
+      <th>Time</th>
+      <th>User</th>
+    </tr>
+    {% for x in logs %}
+    <tr>
+      <td>{{ x.path }}</td>
+      <td>{{ x.params }}</td>
+      <td>{{ x.remote_addr }}</td>
+      <td>{{ x.created_at }}</td>
+      {% if x.user.id %}
+        <td><a href="/users?id={{ x.user.id }}">{{ x.user.username }}</a></td>
+      {% else %}
+        <td>Guest</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

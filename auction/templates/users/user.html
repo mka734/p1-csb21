@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block content %}
+<h1>{{user_page.username}}</h1>
+
+  {# Vulnerability (sensitive data may be printed) #}
+  <table>
+    {% for k, v in user_page.items %}
+      <tr><td><span class="bold">{{k}}:</span></td> <td>{{v}}</td></tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

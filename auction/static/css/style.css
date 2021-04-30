@@ -1,0 +1,73 @@
+* {
+  color: black;
+  font-family: 'Roboto-Regular' !important;
+}
+
+body {
+  padding-top: 50px !important;
+}
+
+li {
+  list-style: none;
+}
+
+th {
+  text-align: left!important;
+}
+
+#messages {
+  position: absolute;
+  bottom: 15%;
+  min-width: 300px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h3 a {
+  color: #00abff !important;
+  font-family: 'Kanit-Bold' !important;
+}
+
+.button {
+  min-width: 100px !important;
+}
+
+.bold {
+  font-family: 'Roboto-Bold' !important;
+  font-weight: bold !important;
+}
+
+input[readonly] {
+  background-color: white !important;
+  cursor: pointer !important;
+}
+
+#id_location[readonly] {
+  background-color: #e8e8e8 !important;
+  cursor: default !important;
+}
+
+@font-face {
+  font-family: 'Kanit-Bold';
+  font-style: normal;
+  src: local('Kanit-Bold'),
+    url('/static/fonts/Kanit-Bold.ttf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  font-style: normal;
+  src: local('Roboto-Regular'),
+    url('/static/fonts/Roboto-Regular.ttf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Roboto-Bold';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Roboto-Bold'),
+    url('/static/fonts/Roboto-Bold.ttf') format('opentype');
+}

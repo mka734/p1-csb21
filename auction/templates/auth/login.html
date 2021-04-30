@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Items{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+
+<form action="/login" method="POST">
+  {% csrf_token %} {{ form }}
+  <input type="submit" value="Login" class="success button" />
+</form>
+
+<div class="callout primary">
+  <h5>Users for testing (admin is a superuser).</h5>
+  <p>Username: admin<br />Password: admin</p>
+  <p>Username: user1<br />Password: user1</p>
+  <p>Username: user2<br />Password: user2</p>
+</div>
+{% endblock %}
