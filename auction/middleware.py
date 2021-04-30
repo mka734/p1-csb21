@@ -2,7 +2,7 @@ from django.http import QueryDict
 from .models import Log, User
 
 
-# Vulnerability (sensitive POST params may be logged)
+# Vulnerability (sensitive POST params may be logged) (FLAW 5)
 def LoggingMiddleware(get_response):
     def middleware(request):
         response = get_response(request)

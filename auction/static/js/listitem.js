@@ -80,7 +80,7 @@ postData('https://json.geoiplookup.io/', {}).then((data) => {
   JavaScript code would then be executed in the application,
   and it could be used, for example, to steal session keys
   or to trick users for their passwords (e.g., by providing
-  a fake login form). */
+  a fake login form). (FLAW 1) */
   newNode.innerHTML = `<div id="notification">Your location (${locationString}) has been automatically filled using your IP address. Click <a id="enable-edit">here</a> if this is incorrect.</div><br />`;
   id_location.parentNode.insertBefore(
     newNode,

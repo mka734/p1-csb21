@@ -10,20 +10,20 @@ from ..models import UserData
 from ..forms import RegisterForm
 
 
-# Vulnerability (all users can view the page)
+# Vulnerability (all users can view the page) (FLAW 2)
 @login_required
 def users_view(request):
     id = request.GET.get('id')
     if id is not None:
-        # The line below simulates the SQL injection. An
+        # The line below simulates an SQL injection. An
         # attacker could perform an SQL injection by passing
         # similar line as the value of the id GET parameter.
         # id = '0 UNION SELECT * FROM auth_user LEFT JOIN auction_userdata ON auth_user.id = auction_userdata.user_id WHERE auth_user.id = 1'
         
-        # Vulnerability (SQL injection)
+        # Vulnerability (SQL injection) (FLAW 4)
         user = User.objects.raw(
             'SELECT * FROM auth_user LEFT JOIN auction_userdata ON auth_user.id = auction_userdata.user_id WHERE auth_user.id = {}'.format(id))
-        # Vulnerability (all data passed)
+        # Vulnerability (all data passed) (FLAW 3)
         user_dict = user[0].__dict__
         if 'password' in user_dict:
             del user_dict['password']
