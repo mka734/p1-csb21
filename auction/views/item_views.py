@@ -73,11 +73,16 @@ def items_view(request):
         return redirect('/items')
     else:
         items = Item.objects.all()
-        user_data = UserData.objects.get(user_id=request.user.id)
-        for x in items:
-            x.next_min_bid = x.current_bid + x.min_increment
-            if user_data.funds - user_data.reserved_funds >= int(x.next_min_bid):
-                x.can_bid = True
+        if request.user.id is not None:
+            user_data = UserData.objects.get(user_id=request.user.id)
+            for x in items:
+                x.next_min_bid = x.current_bid + x.min_increment
+                if user_data.funds - user_data.reserved_funds >= int(x.next_min_bid):
+                    x.can_bid = True
+        else:
+            for x in items:
+                x.next_min_bid = 0
+                x.can_bid = False
 
         # Vulnerability (all owner&bidder info passed)
         return TemplateResponse(request, 'items/items.html', {'items': items})
